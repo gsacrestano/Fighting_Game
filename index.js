@@ -9,9 +9,9 @@ context.fillRect(0, 0, canvas.width, canvas.height)
 const gravity = 0.7
 
 const background = new Sprite({
-    position:{
-        x:0,
-        y:0
+    position: {
+        x: 0,
+        y: 0
     }, imageSrc: "./image/background.png",
 })
 
@@ -21,10 +21,12 @@ const player = new Fighter({
     }, velocity: {
         x: 0, y: 0
     },
-    color: 'red',
+    imageSrc: './image/Martial_Hero/Sprites/Idle.png',
+    framesMax: 8,
+    scale: 3.0,
     offset: {
-        x: 0,
-        y: 0
+        x: 150,
+        y: 225.5
     }
 })
 
@@ -58,7 +60,6 @@ const keys = {
 }
 
 
-
 decreaseTimer();
 
 function animate() {
@@ -67,7 +68,7 @@ function animate() {
     context.fillRect(0, 0, canvas.width, canvas.height)
     background.update()
     player.update()
-    enemy.update()
+    //enemy.update()
 
     player.velocity.x = 0
     enemy.velocity.x = 0
