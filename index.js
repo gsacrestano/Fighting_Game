@@ -6,7 +6,7 @@ canvas.height = 576
 
 context.fillRect(0, 0, canvas.width, canvas.height)
 
-const gravity = 0.7
+const gravity = 0.5
 
 const background = new Sprite({
     position: {
@@ -27,6 +27,25 @@ const player = new Fighter({
     offset: {
         x: 150,
         y: 225.5
+    },
+    sprites: {
+        idle: {
+            imageSrc: './image/Martial_Hero/Sprites/Idle.png',
+            framesMax: 8
+        },
+        run: {
+            imageSrc: './image/Martial_Hero/Sprites/Run.png',
+            framesMax: 8,
+        },
+        jump: {
+            imageSrc: './image/Martial_Hero/Sprites/Jump.png',
+            framesMax: 2,
+        },
+        fall: {
+            imageSrc: './image/Martial_Hero/Sprites/Fall.png',
+            framesMax: 2,
+
+        }
     }
 })
 
@@ -73,11 +92,22 @@ function animate() {
     player.velocity.x = 0
     enemy.velocity.x = 0
 
+
     //player move
     if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = -5
+        player.switchSprite('run')
     } else if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 5
+        player.switchSprite('run')
+    } else {
+        player.switchSprite('idle')
+    }
+    if (player.velocity.y < 0) {
+        player.switchSprite('jump')
+    }
+    if (player.velocity.y > 0) {
+        player.switchSprite('fall')
     }
 
     //enemy move
