@@ -45,7 +45,13 @@ const player = new Fighter({
             imageSrc: './image/Martial_Hero/Sprites/Fall.png',
             framesMax: 2,
 
+        },
+        attack1: {
+            imageSrc: './image/Martial_Hero/Sprites/Attack1.png',
+            framesMax: 6,
+
         }
+
     }
 })
 
