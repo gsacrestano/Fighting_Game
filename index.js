@@ -51,7 +51,14 @@ const player = new Fighter({
             framesMax: 6,
 
         }
-
+    },
+    attackBox: {
+        offset: {
+            x: 210,
+            y: 30,
+        },
+        width: 200,
+        height: 50
     }
 })
 
@@ -92,7 +99,14 @@ const enemy = new Fighter({
             framesMax: 4,
 
         }
-
+    },
+    attackBox: {
+        offset: {
+            x: 0,
+            y: 0,
+        },
+        width: 100,
+        height: 50
     }
 })
 
@@ -150,13 +164,13 @@ function animate() {
     } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
         enemy.velocity.x = 5
         enemy.switchSprite('run')
-    }else{
+    } else {
         enemy.switchSprite('idle')
     }
     if (enemy.velocity.y < 0) {
         player.switchSprite('jump')
     }
-    if (player.velocity.y > 0) {
+    if (enemy.velocity.y > 0) {
         enemy.switchSprite('fall')
     }
 
@@ -166,11 +180,14 @@ function animate() {
             rectangle1: player,
             rectangle2: enemy
         }) &&
-        player.isAttacking) {
+        player.isAttacking && player.framesCurrent === 4) {
         console.log("Hit Player")
         player.isAttacking = false;
         enemy.health -= 20
         document.getElementById('enemyHealth').style.width = enemy.health + '%'
+    }
+    if (player.isAttacking && player.framesCurrent === 4) {
+        player.isAttacking = false
     }
     if (
         rectangularCollision({
