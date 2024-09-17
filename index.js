@@ -62,10 +62,37 @@ const enemy = new Fighter({
     }, velocity: {
         x: 0, y: 0
     },
-    color: 'blue',
     offset: {
         x: -50,
-        y: 0
+        y: 169
+    },
+    imageSrc: './image/Medieval_King/Sprites/Idle.png',
+    framesMax: 8,
+    scale: 3.0,
+    sprites: {
+        idle: {
+            imageSrc: './image/Medieval_King/Sprites/Idle.png',
+            framesMax: 8
+        },
+        run: {
+            imageSrc: './image/Medieval_King/Sprites/Run.png',
+            framesMax: 8,
+        },
+        jump: {
+            imageSrc: './image/Medieval_King/Sprites/Jump.png',
+            framesMax: 2,
+        },
+        fall: {
+            imageSrc: './image/Medieval_King/Sprites/Fall.png',
+            framesMax: 2,
+
+        },
+        attack1: {
+            imageSrc: './image/Medieval_King/Sprites/Attack3.png',
+            framesMax: 4,
+
+        }
+
     }
 })
 
@@ -93,7 +120,7 @@ function animate() {
     context.fillRect(0, 0, canvas.width, canvas.height)
     background.update()
     player.update()
-    //enemy.update()
+    enemy.update()
 
     player.velocity.x = 0
     enemy.velocity.x = 0
@@ -119,8 +146,18 @@ function animate() {
     //enemy move
     if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
         enemy.velocity.x = -5
+        enemy.switchSprite('run')
     } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
         enemy.velocity.x = 5
+        enemy.switchSprite('run')
+    }else{
+        enemy.switchSprite('idle')
+    }
+    if (enemy.velocity.y < 0) {
+        player.switchSprite('jump')
+    }
+    if (player.velocity.y > 0) {
+        enemy.switchSprite('fall')
     }
 
     //collision
