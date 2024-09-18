@@ -6,12 +6,11 @@ canvas.height = 576
 
 context.fillRect(0, 0, canvas.width, canvas.height)
 
-const gravity = 0.5
+const gravity = 0.7
 
 const background = new Sprite({
     position: {
-        x: 0,
-        y: 0
+        x: 0, y: 0
     }, imageSrc: "./image/background.png",
 })
 
@@ -20,93 +19,55 @@ const player = new Fighter({
         x: 0, y: 0
     }, velocity: {
         x: 0, y: 0
-    },
-    imageSrc: './image/Martial_Hero/Sprites/Idle.png',
-    framesMax: 8,
-    scale: 3.0,
-    offset: {
-        x: 150,
-        y: 225.5
-    },
-    sprites: {
+    }, imageSrc: './image/Martial_Hero/Sprites/Idle.png', framesMax: 8, scale: 3.0, offset: {
+        x: 215, y: 225.5
+    }, sprites: {
         idle: {
-            imageSrc: './image/Martial_Hero/Sprites/Idle.png',
-            framesMax: 8
-        },
-        run: {
-            imageSrc: './image/Martial_Hero/Sprites/Run.png',
-            framesMax: 8,
-        },
-        jump: {
-            imageSrc: './image/Martial_Hero/Sprites/Jump.png',
-            framesMax: 2,
-        },
-        fall: {
-            imageSrc: './image/Martial_Hero/Sprites/Fall.png',
-            framesMax: 2,
+            imageSrc: './image/Martial_Hero/Sprites/Idle.png', framesMax: 8
+        }, run: {
+            imageSrc: './image/Martial_Hero/Sprites/Run.png', framesMax: 8,
+        }, jump: {
+            imageSrc: './image/Martial_Hero/Sprites/Jump.png', framesMax: 2,
+        }, fall: {
+            imageSrc: './image/Martial_Hero/Sprites/Fall.png', framesMax: 2,
 
-        },
-        attack1: {
-            imageSrc: './image/Martial_Hero/Sprites/Attack1.png',
-            framesMax: 6,
+        }, attack1: {
+            imageSrc: './image/Martial_Hero/Sprites/Attack1.png', framesMax: 6,
 
         }
-    },
-    attackBox: {
+    }, attackBox: {
         offset: {
-            x: 210,
-            y: 30,
-        },
-        width: 200,
-        height: 50
+            x: 130, y: 20,
+        }, width: 180, height: 50
     }
 })
 
 
 const enemy = new Fighter({
     position: {
-        x: 400, y: 100
+        x: 500, y: 100
     }, velocity: {
         x: 0, y: 0
-    },
-    offset: {
-        x: -50,
-        y: 169
-    },
-    imageSrc: './image/Medieval_King/Sprites/Idle.png',
-    framesMax: 8,
-    scale: 3.0,
-    sprites: {
+    }, imageSrc: './image/Medieval_King/Sprites/Idle.png', framesMax: 8, scale: 3.0, offset: {
+        x: 215, y: 169
+    }, sprites: {
         idle: {
-            imageSrc: './image/Medieval_King/Sprites/Idle.png',
-            framesMax: 8
-        },
-        run: {
-            imageSrc: './image/Medieval_King/Sprites/Run.png',
-            framesMax: 8,
-        },
-        jump: {
-            imageSrc: './image/Medieval_King/Sprites/Jump.png',
-            framesMax: 2,
-        },
-        fall: {
-            imageSrc: './image/Medieval_King/Sprites/Fall.png',
-            framesMax: 2,
+            imageSrc: './image/Medieval_King/Sprites/Idle.png', framesMax: 8
+        }, run: {
+            imageSrc: './image/Medieval_King/Sprites/Run.png', framesMax: 8,
+        }, jump: {
+            imageSrc: './image/Medieval_King/Sprites/Jump.png', framesMax: 2,
+        }, fall: {
+            imageSrc: './image/Medieval_King/Sprites/Fall.png', framesMax: 2,
 
-        },
-        attack1: {
-            imageSrc: './image/Medieval_King/Sprites/Attack3.png',
-            framesMax: 4,
+        }, attack1: {
+            imageSrc: './image/Medieval_King/Sprites/Attack3.png', framesMax: 4,
 
         }
-    },
-    attackBox: {
+    }, attackBox: {
         offset: {
-            x: 0,
-            y: 0,
-        },
-        width: 100,
-        height: 50
+            x: -190, y: 20,
+        }, width: 170, height: 50
     }
 })
 
@@ -175,35 +136,35 @@ function animate() {
     }
 
     //collision
-    if (
-        rectangularCollision({
-            rectangle1: player,
-            rectangle2: enemy
-        }) &&
-        player.isAttacking && player.framesCurrent === 4) {
+    if (rectangularCollision({
+        rectangle1: player, rectangle2: enemy
+    }) && player.isAttacking && player.framesCurrent === 4) {
         console.log("Hit Player")
         player.isAttacking = false;
         enemy.health -= 20
         document.getElementById('enemyHealth').style.width = enemy.health + '%'
     }
+    //miss player
     if (player.isAttacking && player.framesCurrent === 4) {
         player.isAttacking = false
     }
-    if (
-        rectangularCollision({
-            rectangle1: enemy,
-            rectangle2: player
-        }) &&
-        enemy.isAttacking) {
+    if (rectangularCollision({
+        rectangle1: player, rectangle2: enemy
+    }) && enemy.isAttacking && enemy.framesCurrent === 2) {
         console.log("Hit Enemy")
         enemy.isAttacking = false;
         player.health -= 20
         document.getElementById('playerHealth').style.width = player.health + '%'
+    } else if (enemy.isAttacking) {
+        console.log(enemy.attackBox.position.x + ' ' + enemy.width + ' ' + player.position.x)
+
+    }
+    if (enemy.isAttacking && enemy.framesCurrent === 2) {
+        enemy.isAttacking = false
     }
 
     //end game
-    if (enemy.health <= 0 || player.health <= 0)
-        Winner({player, enemy, timerId})
+    if (enemy.health <= 0 || player.health <= 0) Winner({player, enemy, timerId})
 
 }
 

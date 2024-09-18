@@ -55,23 +55,30 @@ class Fighter extends Sprite {
                     framesMax = 1,
                     offset = {x: 0, y: 0},
                     sprites,
-                    attackBox = {offset: {}, width: undefined, height: undefined}
+                    attackBox = {offset: {}, width: 0, height: 0}
                 }) {
-        super({position, imageSrc, scale, framesMax, offset})
+        super({
+            position,
+            imageSrc,
+            scale,
+            framesMax,
+            offset
+        })
+
         this.velocity = velocity
-        this.height = 150;
-        this.width = 50;
+        this.width = 50
+        this.height = 150
         this.lastKey = ''
         this.attackBox = {
             position: {
                 x: this.position.x,
                 y: this.position.y
             },
-            offset:attackBox.offset,
+            offset: attackBox.offset,
             width: attackBox.width,
             height: attackBox.height
         }
-        this.isAttacking = false;
+        this.isAttacking = false
         this.health = 100
         this.framesCurrent = 0
         this.framesElapsed = 0
@@ -88,10 +95,11 @@ class Fighter extends Sprite {
     update() {
         this.draw()
         this.animateFrame()
-        this.attackBox.position.x = this.position.x + this.attackBox.offset.x
-        this.attackBox.position.y = this.position.y+  this.attackBox.offset.y
 
-        context.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
+        this.attackBox.position.x = this.position.x + this.attackBox.offset.x
+        this.attackBox.position.y = this.position.y + this.attackBox.offset.y
+
+       // context.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y;
         if (this.position.y + this.height + this.velocity.y >= canvas.height - 64) {
