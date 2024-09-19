@@ -108,6 +108,8 @@ function animate() {
     context.fillStyle = 'black'
     context.fillRect(0, 0, canvas.width, canvas.height)
     background.update()
+    context.fillStyle = 'rgba(255,255,255,0.15)'
+    context.fillRect(0, 0, canvas.width, canvas.height)
     player.update()
     enemy.update()
 
@@ -156,8 +158,9 @@ function animate() {
         console.log("Hit Player")
         enemy.takeHit()
         player.isAttacking = false;
-
-        document.getElementById('enemyHealth').style.width = enemy.health + '%'
+        gsap.to('#enemyHealth', {
+            width: enemy.health + '%'
+        })
     }
     //miss player
     if (player.isAttacking && player.framesCurrent === 4) {
@@ -169,7 +172,9 @@ function animate() {
         console.log("Hit Enemy")
         player.takeHit()
         enemy.isAttacking = false;
-        document.getElementById('playerHealth').style.width = player.health + '%'
+        gsap.to('#playerHealth', {
+            width: player.health + '%'
+        })
     } else if (enemy.isAttacking) {
         console.log(enemy.attackBox.position.x + ' ' + enemy.width + ' ' + player.position.x)
 
