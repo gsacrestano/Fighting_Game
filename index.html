@@ -1,87 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: "Press Start 2P", system-ui;
-
-        }
-
-
-    </style>
-    <title> Game </title>
+    <title> Fighting-Game </title>
 </head>
 <body>
-<!-- red container div -->
-<div style="position: relative; display: inline-block">
-    <!-- smaller red container div -->
-    <div
-            style="
-        position: absolute;
-        display: flex;
-        width: 100%;
-        align-items: center;
-        padding: 20px;
-      "
-    >
-        <!-- player health -->
-        <div style="position: relative; width: 100%; display: flex; justify-content: flex-end; border-top: 4px solid #991b1b;border-bottom: 4px solid #991b1b;border-left: 4px solid #991b1b">
-            <div style="background-color: red; height: 30px; width: 100%"></div>
-            <div id="playerHealth"
-                 style="
-            position: absolute;
-            background: #166534;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
 
-          "
-            ></div>
+<div id="mainContainer">
+    <!-- smaller red container div -->
+    <div id="bar">
+        <!-- player health -->
+        <div id ="leftBar">
+            <div class="damage"></div>
+            <div id="playerHealth"></div>
         </div>
 
         <!-- timer -->
-        <div
-                id="timer"
-                style="
-          background-color: black;
-          width: 100px;
-          height: 70px;
-          flex-shrink: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          border: 4px solid #991b1b
-        "
-        >
-            10
-        </div>
+        <div id="timer"></div>
         <!-- enemy health -->
-        <div style="position: relative; width: 100%; border-top: 4px solid #991b1b;border-bottom: 4px solid #991b1b;border-right: 4px solid #991b1b">
-            <div style="background-color: red; height: 30px"></div>
-            <div
-                    id="enemyHealth"
-                    style="
-            position: absolute;
-            background: #166534;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-          "
-            ></div>
+        <div id = "rightBar">
+            <div class="damage"></div>
+            <div id="enemyHealth"></div>
         </div>
         <div></div>
     </div>
-    <div id='result'
-         style="position: absolute; color: white; align-items: center; justify-content: center; top: 0; right: 0; left: 0; bottom: 0; display: none">
-        Tie
-    </div>
+    <div id='result'></div>
     <canvas></canvas>
 </div>
 
