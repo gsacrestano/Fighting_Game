@@ -99,7 +99,7 @@ class Fighter extends Sprite {
         this.attackBox.position.x = this.position.x + this.attackBox.offset.x
         this.attackBox.position.y = this.position.y + this.attackBox.offset.y
 
-       // context.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
+        // context.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y;
         if (this.position.y + this.height + this.velocity.y >= canvas.height - 64) {
@@ -114,9 +114,19 @@ class Fighter extends Sprite {
 
     }
 
+    takeHit() {
+        this.switchSprite('takeHit')
+        this.health -= 20
+    }
+
     switchSprite(sprite) {
+
+        //attack override
         if (this.image === this.sprites.attack1.image && this.framesCurrent < this.sprites.attack1.framesMax - 1)
             return
+        //takeHit override
+        if (this.image === this.sprites.takeHit.image && this.framesCurrent < this.sprites.takeHit.framesMax - 1)
+            return;
         switch (sprite) {
 
             case 'idle':
@@ -152,6 +162,13 @@ class Fighter extends Sprite {
                 if (this.image !== this.sprites.attack1.image) {
                     this.image = this.sprites.attack1.image
                     this.framesMax = this.sprites.attack1.framesMax
+                    this.framesCurrent = 0
+                }
+                break
+            case 'takeHit':
+                if (this.image !== this.sprites.takeHit.image) {
+                    this.image = this.sprites.takeHit.image
+                    this.framesMax = this.sprites.takeHit.framesMax
                     this.framesCurrent = 0
                 }
                 break

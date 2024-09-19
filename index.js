@@ -34,6 +34,9 @@ const player = new Fighter({
         }, attack1: {
             imageSrc: './image/Martial_Hero/Sprites/Attack1.png', framesMax: 6,
 
+        },
+        takeHit: {
+            imageSrc: './image/Martial_Hero/Sprites/Take Hit - white silhouette.png', framesMax: 4,
         }
     }, attackBox: {
         offset: {
@@ -62,6 +65,10 @@ const enemy = new Fighter({
 
         }, attack1: {
             imageSrc: './image/Medieval_King/Sprites/Attack3.png', framesMax: 4,
+
+        },
+        takeHit: {
+            imageSrc: './image/Medieval_King/Sprites/Take Hit - white silhouette.png', framesMax: 4,
 
         }
     }, attackBox: {
@@ -140,8 +147,9 @@ function animate() {
         rectangle1: player, rectangle2: enemy
     }) && player.isAttacking && player.framesCurrent === 4) {
         console.log("Hit Player")
+        enemy.takeHit()
         player.isAttacking = false;
-        enemy.health -= 20
+
         document.getElementById('enemyHealth').style.width = enemy.health + '%'
     }
     //miss player
@@ -152,8 +160,8 @@ function animate() {
         rectangle1: player, rectangle2: enemy
     }) && enemy.isAttacking && enemy.framesCurrent === 2) {
         console.log("Hit Enemy")
+        player.takeHit()
         enemy.isAttacking = false;
-        player.health -= 20
         document.getElementById('playerHealth').style.width = player.health + '%'
     } else if (enemy.isAttacking) {
         console.log(enemy.attackBox.position.x + ' ' + enemy.width + ' ' + player.position.x)
